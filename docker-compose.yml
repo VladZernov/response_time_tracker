@@ -1,0 +1,30 @@
+version: '2'
+services:
+  php:
+    image: nitra/php:php7
+    links:
+      - mysql
+    volumes:
+      - ./symfony:/var/www
+  nginx:
+    image: nitra/nginx:cors
+    ports:
+      - 81:80
+    links:
+      - php
+    volumes_from:
+      - php
+  mysql:
+    image: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+  ws:
+    build: websocket/.
+    ports:
+     - "127.0.0.1:1337:1337"
+    links:
+      - php
+    volumes_from:
+      - php

@@ -1,0 +1,9 @@
+services:
+    app.topic_service:
+        class: AppBundle\Topic\AcmeTopic
+        tags:
+            - { name: gos_web_socket.topic }
+        arguments : ['@app.ping_service']
+        
+    app.ping_service:
+        class: AppBundle\Utily\PingService
